@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .drag-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .list-container {
+        width: 120px;
+        height: 100%;
+        padding: 10px;
+      }
+      .item {
+        width: 120px;
+        height: 20px;
+        line-height: 20px;
+        background-color: #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        cursor: move;
+      }
+      .group-container {
+        width: 140px;
+        height: 1000px;
+        padding: 10px;
+        margin-left: 100px;
+      }
+      .group {
+        width: 100%;
+        height: 200px;
+        border: 1px solid blue;
+        margin-bottom: 10px;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="drag-container">
+      <div class="list-container">
+        <h3>拖拽到B组试试看</h3>
+        <div class="item" draggable="true" ondragstart="drag(event)">张三</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">李四</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">王二</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">麻子</div>
+      </div>
+
+      <div class="group-container">
+        <div
+          class="group"
+          ondragover="allowDrop(event)"
+          ondrop="drop(event, 'group1')"
+        >
+          1组
+        </div>
+        <div
+          class="group"
+          ondragover="allowDrop(event)"
+          ondrop="drop(event, 'group2')"
+        >
+          2组
+        </div>
+        <div
+          class="group"
+          ondragover="allowDrop(event)"
+          ondrop="drop(event, 'group3')"
+        >
+          3组
+        </div>
+        <div
+          class="group"
+          ondragover="allowDrop(event)"
+          ondrop="drop(event, 'group4')"
+        >
+          4组
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let draggedItem = null;
+
+      function drag(event) {
+        draggedItem = event.target;
+      }
+
+      function allowDrop(event) {
+        event.preventDefault();
+      }
+
+      function drop(event, groupId) {
+        event.preventDefault();
+
+        event.target.appendChild(draggedItem);
+        draggedItem.setAttribute('data-group', groupId);
+
+        draggedItem = null;
+      }
+    </script>
+  </body>
+</html>
